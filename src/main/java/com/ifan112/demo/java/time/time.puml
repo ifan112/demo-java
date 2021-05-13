@@ -1,0 +1,76 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+title Java Time
+
+'时间单位
+interface TemporalUnit
+
+'日期或时间的字段
+interface TemporalField {
+    TemporalUnit getBaseUnit()
+
+    boolean isDateBased()
+    boolean isTimeBased()
+}
+
+'日期和时间对象的只读访问接口
+interface TemporalAccess {
+    boolean isSupported(TemporalField field)
+    long getLong(TemporalField field)
+    int get(TemporalField field)
+}
+
+'时间调整器
+interface TemporalAdjuster {
+    Temporal adjustInto(Temporal source)
+}
+
+interface Temporal {
+    boolean isSupported(TemporalUnit unit)
+    Temporal with(TemporalAdjuster adjuster)
+
+    Temporal plus(TemporalAmount amount)
+    Temporal plus(long amountToAdd, TemporalUnit unit)
+
+    Temporal minus(TemporalAmount amount)
+    Temporal minus(long amountToSubtract, TemporalUnit unit)
+
+    long until(Temporal endExclusive, TemporalUnit unit)
+}
+
+TemporalAccess <|-- Temporal
+
+
+
+class LocalTime {
+}
+
+Temporal <|-- LocalTime
+TemporalAdjuster <|-- LocalTime
+
+''''''''''''''' 时区相关 '''''''''''''''
+
+abstract class ZoneId {
+}
+
+class ZoneOffset {
+}
+
+ZoneId <|-- ZoneOffset
+
+
+''''''''''''''' 时刻相关 '''''''''''''''
+
+abstract class Clock {
+}
+
+'时刻
+class Instant {
+
+}
+
+Temporal <|-- Instant
+TemporalAdjuster <|-- Instant
+
+@enduml
