@@ -6,6 +6,11 @@ title Java Time
 '时间单位
 interface TemporalUnit
 
+enum ChronoUnit {}
+
+TemporalUnit <|-- ChronoUnit
+
+
 '日期或时间的字段
 interface TemporalField {
     TemporalUnit getBaseUnit()
@@ -13,6 +18,19 @@ interface TemporalField {
     boolean isDateBased()
     boolean isTimeBased()
 }
+
+enum ChronoField {}
+
+TemporalField <|-- ChronoField
+
+
+interface TemporalAmount {}
+
+class Duration {
+}
+
+TemporalAmount <|-- Duration
+
 
 '日期和时间对象的只读访问接口
 interface TemporalAccess {
@@ -69,6 +87,9 @@ abstract class Clock {
 class Instant {
 
 }
+
+'聚合。Instant 通常基于 Clock 创建的
+Clock o--> Instant
 
 Temporal <|-- Instant
 TemporalAdjuster <|-- Instant
